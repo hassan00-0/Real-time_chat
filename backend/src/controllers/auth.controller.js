@@ -1,11 +1,13 @@
-import { generateToken } from "../lib/utils";
-import User from "../models/user.model";
+import { generateToken } from "../lib/utils.js";
+import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
-import { generateToken } from "../lib/utils";
 
 export const signUp = async (req, res) => {
   const { fullName, email, password } = req.body;
   try {
+    if (!fullName || !email || !password) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
     if (password.length < 6) {
       return res
         .status(400)
@@ -40,10 +42,36 @@ export const signUp = async (req, res) => {
   }
 };
 
-export const logIn = (req, res) => {
-  res.send("log in");
+export const logIn = async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ message: "invalid credentials" });
+    }
+    const pass = await bcrypt.compare(password, user.password);
+    if (!pass) {
+      return res.status(400).json({ message: "invalid credentials" });
+    }
+    generateToken(user._id, res);
+    res.status(200).json({
+      _id: user._id,
+      fullName: user.fullName,
+      email: user.email,
+      password: user.password,
+      profilePic: user.profilePic,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "internal server error" });
+  }
 };
 
 export const logOut = (req, res) => {
-  res.send("log out");
+  try {
+    res.cookie("jwt", "", { maxAge: 0 });
+    res.status(200).json({ message: "Logged out successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "internal server error" });
+  }
 };
