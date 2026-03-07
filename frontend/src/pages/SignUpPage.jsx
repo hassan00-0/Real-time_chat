@@ -25,6 +25,7 @@ const SignUpPage = () => {
 
   const { isSigningUp, signup } = useAuthStore();
 
+  // check if there is any missing data on the form
   const validateData = () => {
     if (!formData.fullName.trim()) return toast.error("Full name is required");
 
@@ -36,10 +37,11 @@ const SignUpPage = () => {
 
     if (!formData.password.trim()) return toast.error("Password is required");
     if (formData.password.length < 6)
-      return toast.error("Password must be at least 6 charactersord");
+      return toast.error("Password must be at least 6 characters");
 
     return true;
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const success = validateData();
