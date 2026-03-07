@@ -9,6 +9,9 @@ import {
   User,
 } from "lucide-react";
 import { useAuthStore } from "../store/useAuthStore.js";
+import { Link } from "react-router-dom";
+import AuthImagePattern from "../components/AuthImagePattern.jsx";
+
 const SignUpPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
@@ -23,6 +26,7 @@ const SignUpPage = () => {
 
   return (
     <div className="min-h-screen grid lg:grid-cols-2">
+      {/* left side */}
       <div className="flex flex-col justify-center items-center ">
         <div className="w-full max-w-md space-y-8">
           {/* logo section */}
@@ -63,73 +67,88 @@ const SignUpPage = () => {
                 />
               </div>
             </div>
+
+            {/* mail form */}
+
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Email</span>
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 flex justify-center items-center z-10 pl-3">
+                  <Mail className="size-5 text-base-content/40" />
+                </div>
+                <input
+                  type="email"
+                  className="input input-bordered w-full pl-10"
+                  placeholder="you@example.com"
+                  value={formData.email}
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
+                />
+              </div>
+            </div>
+            {/* password form */}
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Password</span>
+              </label>
+              <div className="relative">
+                <div className="absolute z-10 flex justify-center items-center pl-3 inset-y-0">
+                  <Lock className="size-5 text-base-content/40" />
+                </div>
+                <input
+                  type={showPassword ? "text" : "password"}
+                  className="input input-bordered w-full pl-10"
+                  placeholder="••••••••"
+                />
+                <button
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center justify-center"
+                  onClick={() => {
+                    setShowPassword(!showPassword);
+                  }}
+                >
+                  {showPassword ? (
+                    <EyeOff className="size-5 text-base-content/40" />
+                  ) : (
+                    <Eye className="size-5 text-base-content/40" />
+                  )}
+                </button>
+              </div>
+            </div>
+            {/* put loading if someone submits  */}
+            <button
+              type="submit"
+              className="btn btn-primary mt-5 w-full"
+              disabled={isSigningUp}
+            >
+              {isSigningUp ? (
+                <>
+                  <Loader2 className="size-5 animate-spin" />
+                  Loading...
+                </>
+              ) : (
+                "Create Account"
+              )}
+            </button>
           </form>
-
-          {/* mail form */}
-
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text">Email</span>
-            </label>
-            <div className="relative">
-              <div className="absolute inset-y-0 flex justify-center items-center z-10 pl-3">
-                <Mail className="size-5 text-base-content/40" />
-              </div>
-              <input
-                type="email"
-                className="input input-bordered w-full pl-10"
-                placeholder="you@example.com"
-                value={formData.email}
-                onChange={(e) =>
-                  setFormData({ ...formData, email: e.target.value })
-                }
-              />
-            </div>
-          </div>
-
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text">Password</span>
-            </label>
-            <div className="relative">
-              <div className="absolute z-10 flex justify-center items-center pl-3 inset-y-0">
-                <Lock className="size-5 text-base-content/40" />
-              </div>
-              <input
-                type={showPassword ? "text" : "password"}
-                className="input input-bordered w-full pl-10"
-                placeholder="••••••••"
-              />
-              <button
-                className="absolute inset-y-0 right-0 pr-3 flex items-center justify-center"
-                onClick={() => {
-                  setShowPassword(!showPassword);
-                }}
-              >
-                {showPassword ? (
-                  <EyeOff className="size-5 text-base-content/40" />
-                ) : (
-                  <Eye className="size-5 text-base-content/40" />
-                )}
-              </button>
-            </div>
-          </div>
-          <button
-            type="submit"
-            className="btn btn-primary"
-            disabled={isSigningUp}
-          >
-            {isSigningUp ? (
-              <>
-                <Loader2 className="size-5 animate-spin" />
-                Loading...
-              </>
-            ) : (
-              "Create Account"
-            )}
-          </button>
+          {/* route the user to login if he already has an account */}
+          <p className="text-center text-base-content/60">
+            Already have an account?{" "}
+            <Link to="/login" className="link link-primary">
+              Sign in
+            </Link>
+          </p>
         </div>
       </div>
+
+      {/* right side */}
+
+      <AuthImagePattern
+        title="Join our community"
+        subtitle="Connect with friends, share moments, and stay in touch with your loved ones."
+      />
     </div>
   );
 };
