@@ -11,6 +11,7 @@ import SettingsPage from "./pages/SettingsPage";
 import SignUpPage from "./pages/SignUpPage";
 
 import { useAuthStore } from "./store/useAuthStore.js";
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
   const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
@@ -51,6 +52,7 @@ const App = () => {
         />
         <Route path="/settings" element={<SettingsPage />} />
       </Routes>
+      <Toaster />
     </div>
   );
 };

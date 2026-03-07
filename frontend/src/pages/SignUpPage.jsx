@@ -12,16 +12,40 @@ import { useAuthStore } from "../store/useAuthStore.js";
 import { Link } from "react-router-dom";
 import AuthImagePattern from "../components/AuthImagePattern.jsx";
 
+import { toast } from "react-hot-toast";
+
 const SignUpPage = () => {
   const [showPassword, setShowPassword] = useState(false);
+
   const [formData, setFormData] = useState({
     fullName: "",
     password: "",
     email: "",
   });
+
   const { isSigningUp, signup } = useAuthStore();
+
+  const validateData = () => {
+    if (!formData.fullName.trim()) return toast.error("Full name is required");
+
+    if (!formData.email.trim()) return toast.error("Email is required");
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email))
+      return toast.error("Invalid email format");
+
+    if (!formData.password.trim()) return toast.error("Password is required");
+    if (formData.password.length < 6)
+      return toast.error("Password must be at least 6 charactersord");
+
+    return true;
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
+    const success = validateData();
+    if (success) {
+      signup(formData);
+    }
   };
 
   return (
@@ -44,7 +68,7 @@ const SignUpPage = () => {
           </div>
 
           {/* Name form */}
-          <form action={handleSubmit}>
+          <form onSubmit={handleSubmit} className="w-full">
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Full Name</span>
@@ -102,6 +126,10 @@ const SignUpPage = () => {
                   type={showPassword ? "text" : "password"}
                   className="input input-bordered w-full pl-10"
                   placeholder="••••••••"
+                  value={formData.password}
+                  onChange={(e) => {
+                    setFormData({ ...formData, password: e.target.value });
+                  }}
                 />
                 <button
                   className="absolute inset-y-0 right-0 pr-3 flex items-center justify-center"
