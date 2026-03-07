@@ -1,0 +1,137 @@
+import React, { useState } from "react";
+import {
+  Eye,
+  EyeOff,
+  Loader2,
+  Lock,
+  Mail,
+  MessageSquare,
+  User,
+} from "lucide-react";
+import { useAuthStore } from "../store/useAuthStore.js";
+const SignUpPage = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [formData, setFormData] = useState({
+    fullName: "",
+    password: "",
+    email: "",
+  });
+  const { isSigningUp, signup } = useAuthStore();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
+  return (
+    <div className="min-h-screen grid lg:grid-cols-2">
+      <div className="flex flex-col justify-center items-center ">
+        <div className="w-full max-w-md space-y-8">
+          {/* logo section */}
+          <div className="flex flex-col justify-center items-center group">
+            <div className="bg-primary/10 size-12 rounded-xl flex justify-center items-center group-hover:bg-primary/20 transition-colors">
+              <MessageSquare className="text-primary size-6" />
+            </div>
+
+            <div className="flex flex-col justify-center items-center m-4 gap-2">
+              <h1 className="text-2xl font-bold">Create Account</h1>
+              <p className="text-base-content/60">
+                Get started with your free account
+              </p>
+            </div>
+          </div>
+
+          {/* Name form */}
+          <form action={handleSubmit}>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Full Name</span>
+              </label>
+              <div className="relative">
+                <div className="inset-y-0 absolute z-10 flex justify-center items-center pl-3">
+                  <User className="size-5 text-base-content/40 " />
+                </div>
+                <input
+                  type="text"
+                  className="input input-bordered w-full pl-10"
+                  placeholder="Hassan Yassine"
+                  value={formData.fullName}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      fullName: e.target.value,
+                    })
+                  }
+                />
+              </div>
+            </div>
+          </form>
+
+          {/* mail form */}
+
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Email</span>
+            </label>
+            <div className="relative">
+              <div className="absolute inset-y-0 flex justify-center items-center z-10 pl-3">
+                <Mail className="size-5 text-base-content/40" />
+              </div>
+              <input
+                type="email"
+                className="input input-bordered w-full pl-10"
+                placeholder="you@example.com"
+                value={formData.email}
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
+              />
+            </div>
+          </div>
+
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Password</span>
+            </label>
+            <div className="relative">
+              <div className="absolute z-10 flex justify-center items-center pl-3 inset-y-0">
+                <Lock className="size-5 text-base-content/40" />
+              </div>
+              <input
+                type={showPassword ? "text" : "password"}
+                className="input input-bordered w-full pl-10"
+                placeholder="••••••••"
+              />
+              <button
+                className="absolute inset-y-0 right-0 pr-3 flex items-center justify-center"
+                onClick={() => {
+                  setShowPassword(!showPassword);
+                }}
+              >
+                {showPassword ? (
+                  <EyeOff className="size-5 text-base-content/40" />
+                ) : (
+                  <Eye className="size-5 text-base-content/40" />
+                )}
+              </button>
+            </div>
+          </div>
+          <button
+            type="submit"
+            className="btn btn-primary"
+            disabled={isSigningUp}
+          >
+            {isSigningUp ? (
+              <>
+                <Loader2 className="size-5 animate-spin" />
+                Loading...
+              </>
+            ) : (
+              "Create Account"
+            )}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default SignUpPage;
