@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useAuthStore } from "../store/useAuthStore.js";
-import { Camera } from "lucide-react";
+import { Camera, Mail, User } from "lucide-react";
 
 const ProfilePage = () => {
   const { authUser, isUpdatingProfile, updateProfile } = useAuthStore();
@@ -24,8 +24,10 @@ const ProfilePage = () => {
       <div className="max-w-2xl mx-auto">
         <div className="bg-base-300 rounded-xl p-6">
           <div className="text-center">
-            <h1>Profile</h1>
-            <p>Your profile information</p>
+            <h1 className="text-2xl font-semibold">Profile</h1>
+            <p className="pt-2 pb-4 text-base-content/60">
+              Your profile information
+            </p>
             <div className="flex flex-col items-center">
               <div className="relative">
                 <img
@@ -53,6 +55,43 @@ const ProfilePage = () => {
               <p className="text-sm text-zinc-400">
                 {isUpdatingProfile ? "Uploading..." : ""}
               </p>
+            </div>
+          </div>
+
+          <div className="space-y-6">
+            {/* fullname field */}
+            <div className="mt-17 space-y-1.5">
+              <div className="flex items-center justify-start gap-2 text-zinc-400 text-sm">
+                <User className="size-5" />
+                Full Name
+              </div>
+              <p className="bg-base-200 rounded-lg border border-base-300 px-4 py-2.5">
+                {authUser?.fullName}
+              </p>
+            </div>
+            {/* email field */}
+            <div className="space-y-1.5">
+              <div className="flex items-center justify-start gap-2 text-zinc-400 text-sm">
+                <Mail className="size-5" />
+                Email
+              </div>
+              <p className="bg-base-200 rounded-lg border border-base-300 px-4 py-2.5">
+                {authUser?.email}
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-6 bg-base-300 rounded-xl p-6">
+            <h2 className="text-lg font-medium mb-4">Account Information</h2>
+            <div className="space-y-3 text-sm">
+              <div className="flex items-center justify-between py-2 border-b border-zinc-700">
+                <span>Member Since</span>
+                <span>{authUser.createdAt?.split("T")[0]}</span>
+              </div>
+              <div className="flex items-center justify-between py-2">
+                <span>Account Status</span>
+                <span className="text-green-500">Active</span>
+              </div>
             </div>
           </div>
         </div>
