@@ -12,7 +12,9 @@ const app = express();
 const port = process.env.PORT;
 
 // to be able to read json
-app.use(express.json());
+app.use(express.json({ limit: "5mb" }));
+app.use(express.urlencoded({ limit: "5mb", extended: true }));
+
 // be able to use cookies as js objects, like req.cookies
 app.use(cookieParser());
 

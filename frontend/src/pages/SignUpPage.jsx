@@ -72,7 +72,7 @@ const SignUpPage = () => {
           {/* Name form */}
           <form onSubmit={handleSubmit} className="w-full">
             <div className="form-control">
-              <label className="label">
+              <label className="label" htmlFor="username">
                 <span className="label-text">Full Name</span>
               </label>
               <div className="relative">
@@ -81,6 +81,7 @@ const SignUpPage = () => {
                 </div>
                 <input
                   type="text"
+                  id="username"
                   className="input input-bordered w-full pl-10"
                   placeholder="Hassan Yassine"
                   value={formData.fullName}
@@ -97,7 +98,7 @@ const SignUpPage = () => {
             {/* mail form */}
 
             <div className="form-control">
-              <label className="label">
+              <label className="label" htmlFor="email">
                 <span className="label-text">Email</span>
               </label>
               <div className="relative">
@@ -106,6 +107,7 @@ const SignUpPage = () => {
                 </div>
                 <input
                   type="email"
+                  id="email"
                   className="input input-bordered w-full pl-10"
                   placeholder="you@example.com"
                   value={formData.email}
@@ -117,7 +119,7 @@ const SignUpPage = () => {
             </div>
             {/* password form */}
             <div className="form-control">
-              <label className="label">
+              <label className="label" htmlFor="password">
                 <span className="label-text">Password</span>
               </label>
               <div className="relative">
@@ -126,6 +128,7 @@ const SignUpPage = () => {
                 </div>
                 <input
                   type={showPassword ? "text" : "password"}
+                  id="password"
                   className="input input-bordered w-full pl-10"
                   placeholder="••••••••"
                   value={formData.password}
@@ -134,6 +137,7 @@ const SignUpPage = () => {
                   }}
                 />
                 <button
+                  type="button"
                   className="absolute inset-y-0 right-0 pr-3 flex items-center justify-center"
                   onClick={() => {
                     setShowPassword(!showPassword);
