@@ -126,7 +126,7 @@ const LoginPage = () => {
           </form>
           <p>
             Don't have an account?{" "}
-            <Link to="/signin" className="link link-primary">
+            <Link to="/signup" className="link link-primary">
               create account
             </Link>
           </p>

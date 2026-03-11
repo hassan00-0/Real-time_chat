@@ -3,8 +3,8 @@ import authRouter from "./routes/auth.route.js";
 import dotenv from "dotenv";
 import connectDb from "./lib/db.js";
 import cookieParser from "cookie-parser";
-import { getMessages } from "./controllers/message.controller.js";
 import cors from "cors";
+import messageRoutes from "./routes/message.route.js";
 
 dotenv.config();
 
@@ -27,7 +27,7 @@ app.use(
 
 // routes
 app.use("/api/auth", authRouter);
-app.use("/api/messages", getMessages);
+app.use("/api/messages", messageRoutes);
 
 app.listen(port, () => {
   console.log("listening on port 5000.");

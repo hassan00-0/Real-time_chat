@@ -6,8 +6,9 @@ export const getUsersForSideBar = async (req, res) => {
     const filteredUsers = await User.find({ _id: { $ne: loggedUser } }).select(
       "-password",
     );
-    res.status(200).json({ filteredUsers });
+    res.status(200).json(filteredUsers);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
@@ -25,6 +26,7 @@ export const getMessages = async (req, res) => {
     });
     res.status(200).json(messages);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
@@ -49,6 +51,7 @@ export const sendMessage = async (req, res) => {
     await message.save();
     res.status(201).json({ message: "message sent successfully" });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
