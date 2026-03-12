@@ -37,6 +37,7 @@ const MessageInput = () => {
         text: text.trim(),
         image: imagePreview,
       });
+      // clear the form
       setText("");
       setImagePreview(null);
     } catch (error) {
@@ -48,23 +49,24 @@ const MessageInput = () => {
     <div className="p-4 w-full bg-base-300">
       {/* image preview */}
       {imagePreview && (
-        <div className="flex">
+        <div className="flex mb-3 items-center gap-2">
           {/* image container */}
-          <div className="relative">
+          <div className="relative size-20">
             <img
               src={imagePreview}
               alt="Preview"
               className="size-20 object-cover rounded-lg border border-zinc-700"
             />
-          </div>
 
-          {/* close btn container */}
-          <button
-            onClick={removeImage}
-            className="absolute -top-1.5 -right-1.5 size-5 rounded-full bg-base-300 flex items-center justify-center"
-          >
-            <X className="size-3" />
-          </button>
+            {/* close btn container */}
+            <button
+              type="button"
+              onClick={removeImage}
+              className="cursor-pointer absolute -top-1.5 -right-1.5 size-5 rounded-full bg-base-300 flex items-center justify-center border border-base-100 shadow-sm"
+            >
+              <X className="size-3" />
+            </button>
+          </div>
         </div>
       )}
 
@@ -89,7 +91,7 @@ const MessageInput = () => {
 
           <button
             type="button"
-            className={` hidden sm:flex btn-circle ${imagePreview ? "text-emerald-500" : "text-zinc-400"}`}
+            className={`cursor-pointer hidden sm:flex btn-circle ${imagePreview ? "text-emerald-500" : "text-zinc-400"}`}
             onClick={() => fileInputRef.current?.click()}
           >
             <Image size={23} />
