@@ -2,18 +2,26 @@ import React, { useEffect } from "react";
 import { useChatStore } from "../store/useChatStore.js";
 import ChatHeader from "./ChatHeader.jsx";
 import MessageInput from "./MessageInput.jsx";
+import MessageSkeleton from "./skeletons/MessageSkeleton.jsx";
 
 const ChatContainer = () => {
-  const { message, getMessages, isMessagesLoading, selectedUser } =
+  const { messages, getMessages, isMessagesLoading, selectedUser } =
     useChatStore();
 
   useEffect(() => {
     getMessages(selectedUser._id);
   }, [selectedUser._id, getMessages]);
 
-  if (isMessagesLoading) return <div>Loading ...</div>;
+  if (isMessagesLoading)
+    return (
+      <div className="flex flex-col flex-1 overflow-auto">
+        <ChatHeader />
+        <MessageSkeleton />
+        <MessageInput />
+      </div>
+    );
   return (
-    <div>
+    <div className="flex flex-col flex-1 overflow-auto">
       <ChatHeader />
       <p>messages...</p>
       <MessageInput />

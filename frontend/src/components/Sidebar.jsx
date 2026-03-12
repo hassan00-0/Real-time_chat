@@ -14,7 +14,7 @@ const Sidebar = () => {
 
   if (isUsersLoading) return <SidebarSkeleton />;
   return (
-    <aside className="h-full w-20 lg:w-72 border-r border-base-300 flex flex-col transition-all duration-200">
+    <aside className="h-full w-24 lg:w-80 border-r border-base-300 flex flex-col transition-all duration-200">
       {/* header */}
       <div className="border-b border-base-300 w-full p-5 flex items-center gap-2">
         <Users className="size-5" />
@@ -28,11 +28,11 @@ const Sidebar = () => {
           <button
             key={user._id}
             onClick={() => setSelectedUser(user)}
-            className={`w-full p-3 flex justify-start items-center gap-3 hover:bg-base-300 
-            transition-colors ${selectedUser?._id === user._id ? "bg-base-300 ring-1 ring-base-300" : ""}  `}
+            className={`w-full p-3 flex justify-center lg:justify-start items-center gap-3 hover:bg-base-300 
+            transition-colors rounded-xl ${selectedUser?._id === user._id ? "bg-base-300 ring-1 ring-base-300" : ""}  `}
           >
             {/* user image */}
-            <div className="relative mx-auto lg:mx-0">
+            <div className="relative mx-auto lg:mx-0 shrink-0 ">
               <img
                 src={user.profilePic || "/avatar.png"}
                 alt={user.name}
