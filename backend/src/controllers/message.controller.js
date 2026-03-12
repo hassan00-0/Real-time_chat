@@ -1,5 +1,6 @@
 import User from "../models/user.model.js";
 import Message from "../models/message.model.js";
+import cloudinary from "../lib/cloudinary.js";
 export const getUsersForSideBar = async (req, res) => {
   try {
     const loggedUser = req.user._id;
@@ -20,8 +21,8 @@ export const getMessages = async (req, res) => {
 
     const messages = await Message.find({
       $or: [
-        { senderId: myId, receiverId: receiverId },
-        { senderId: receiverId, receiverId: myId },
+        { userId: myId, receiverId: receiverId },
+        { userId: receiverId, receiverId: myId },
       ],
     });
     res.status(200).json(messages);
@@ -49,7 +50,7 @@ export const sendMessage = async (req, res) => {
       image: imageUrl,
     });
     await message.save();
-    res.status(201).json({ message: "message sent successfully" });
+    res.status(201).json(message);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal server error" });

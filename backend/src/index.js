@@ -5,10 +5,10 @@ import connectDb from "./lib/db.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import messageRoutes from "./routes/message.route.js";
+import { server, app } from "./lib/socket.js";
 
 dotenv.config();
 
-const app = express();
 const port = process.env.PORT;
 
 // to be able to read json
@@ -29,7 +29,7 @@ app.use(
 app.use("/api/auth", authRouter);
 app.use("/api/messages", messageRoutes);
 
-app.listen(port, () => {
+server.listen(port, () => {
   console.log("listening on port 5000.");
   connectDb();
 });
