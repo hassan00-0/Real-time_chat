@@ -24,6 +24,25 @@ const MessageInput = () => {
     reader.readAsDataURL(file);
   };
 
+  const handlePaste = (e) => {
+    const items = e.clipboardData?.items;
+    if (!items || items.length === 0) return;
+
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].type.indexOf("image") !== -1) {
+        e.preventDefault();
+        const file = items[i].getAsFile();
+        if (file) {
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            setImagePreview(reader.result);
+          };
+          reader.readAsDataURL(file);
+        }
+      }
+    }
+  };
+
   const removeImage = () => {
     setImagePreview(null);
     if (fileInputRef.current) fileInputRef.current.value = "";
@@ -71,7 +90,11 @@ const MessageInput = () => {
       )}
 
       {/* handle sumbit form */}
-      <form onSubmit={handleSendMessage} className="flex items-center gap-2">
+      <form
+        onSubmit={handleSendMessage}
+        onPaste={handlePaste}
+        className="flex items-center gap-2"
+      >
         <div className="flex-1 flex items-center gap-2">
           {/* text */}
           <input
