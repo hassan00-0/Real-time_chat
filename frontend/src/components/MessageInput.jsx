@@ -90,11 +90,7 @@ const MessageInput = () => {
       )}
 
       {/* handle sumbit form */}
-      <form
-        onSubmit={handleSendMessage}
-        onPaste={handlePaste}
-        className="flex items-center gap-2"
-      >
+      <form onSubmit={handleSendMessage} className="flex items-center gap-2">
         <div className="flex-1 flex items-center gap-2">
           {/* text */}
           <input
@@ -102,6 +98,7 @@ const MessageInput = () => {
             className="input input-bordered w-full rounded-lg "
             value={text}
             onChange={(e) => setText(e.target.value)}
+            onPaste={handlePaste}
           />
           {/* image input */}
           <input
