@@ -6,11 +6,12 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import messageRoutes from "./routes/message.route.js";
 import { server, app } from "./lib/socket.js";
+import path from "path";
 
 dotenv.config();
 
 const port = process.env.PORT;
-
+const _dirname = path.resolve();
 // to be able to read json
 app.use(express.json({ limit: "5mb" }));
 app.use(express.urlencoded({ limit: "5mb", extended: true }));
@@ -28,6 +29,14 @@ app.use(
 // routes
 app.use("/api/auth", authRouter);
 app.use("/api/messages", messageRoutes);
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(_dirname, "../frontend/dist")));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(_dirname, "../frontend", "dist", "index.html"));
+  });
+}
 
 server.listen(port, () => {
   console.log("listening on port 5000.");
