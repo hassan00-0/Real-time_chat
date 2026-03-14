@@ -7,7 +7,7 @@ const MessageInput = () => {
   const [text, setText] = useState("");
   const [imagePreview, setImagePreview] = useState(null);
   const fileInputRef = useRef(null);
-  const { sendMessage } = useChatStore();
+  const { sendMessage, isSendingMessage } = useChatStore();
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -50,6 +50,7 @@ const MessageInput = () => {
 
   const handleSendMessage = async (e) => {
     e.preventDefault();
+    if (isSendingMessage) return;
     if (!text.trim() && !imagePreview) return;
     try {
       await sendMessage({
@@ -62,6 +63,13 @@ const MessageInput = () => {
     } catch (error) {
       console.log("failed to send message ", error);
     }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key !== "Enter") return;
+    if (e.shiftKey) return;
+    e.preventDefault();
+    handleSendMessage(e);
   };
 
   return (
@@ -99,6 +107,7 @@ const MessageInput = () => {
             value={text}
             onChange={(e) => setText(e.target.value)}
             onPaste={handlePaste}
+            onKeyDown={handleKeyDown}
           />
           {/* image input */}
           <input
@@ -126,7 +135,7 @@ const MessageInput = () => {
         ? "text-primary cursor-pointer hover:opacity-80"
         : "text-primary/40 "
     }`}
-            disabled={!text.trim() && !imagePreview}
+            disabled={isSendingMessage || (!text.trim() && !imagePreview)}
           >
             <Send size={23} />
           </button>
