@@ -24,6 +24,24 @@ const MessageInput = () => {
     reader.readAsDataURL(file);
   };
 
+  const handlePaste = (e) => {
+    const items = e.clipboardData.items;
+
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].type.indexOf("image") !== -1) {
+        const file = items[i].getAsFile();
+        if (file) {
+          // Reuse your existing image handler logic
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            setImagePreview(reader.result);
+          };
+          reader.readAsDataURL(file);
+        }
+      }
+    }
+  };
+
   const removeImage = () => {
     setImagePreview(null);
     if (fileInputRef.current) fileInputRef.current.value = "";
@@ -79,6 +97,7 @@ const MessageInput = () => {
             className="input input-bordered w-full rounded-lg "
             value={text}
             onChange={(e) => setText(e.target.value)}
+            onPaste={handlePaste}
           />
           {/* image input */}
           <input
