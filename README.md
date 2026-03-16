@@ -1,6 +1,6 @@
-# Real-time Chat App (Frontend)
+# Real-time Chat App
 
-React UI for a full-stack, real-time chat application. The backend lives in `../backend` and provides auth, messaging, and Socket.IO events.
+Full-stack, real-time chat application with a React frontend and a Node/Express + Socket.IO backend.
 
 ## Features
 
@@ -9,12 +9,21 @@ React UI for a full-stack, real-time chat application. The backend lives in `../
 - Online users list
 - Profile image upload (Cloudinary)
 - Protected routes and session checks
+- REST API for auth and messages
 
 ## Tech Stack
 
+Backend:
+- Node.js + Express
+- MongoDB + Mongoose
+- Socket.IO
+- JWT + cookie-based auth
+- Cloudinary (profile images)
+
+Frontend:
 - React 19 + Vite
 - Tailwind CSS + DaisyUI
-- Zustand for state management
+- Zustand
 - Socket.IO client
 - Axios
 
@@ -24,7 +33,7 @@ React UI for a full-stack, real-time chat application. The backend lives in `../
 - MongoDB connection string
 - Cloudinary account (for profile images)
 
-## Environment Variables (Backend)
+## Environment Variables
 
 Create `backend/.env` with these keys:
 
@@ -54,7 +63,7 @@ npm install --prefix frontend
 npm run dev --prefix frontend
 ```
 
-The frontend runs on `http://localhost:5173` and the backend on `http://localhost:5000`.
+Frontend runs on `http://localhost:5173` and backend on `http://localhost:5000`.
 
 ## Production Build
 
